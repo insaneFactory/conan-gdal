@@ -13,7 +13,6 @@ class GdalConan(ConanFile):
     license = "LGPL"
     archive_name = "gdal-%s.tar.gz" % version
     src_url = "http://download.osgeo.org/gdal/%s/%s" % (version, archive_name)
-    requires = ("Geos/3.4.2@studiofuga/testing")
 
     def source(self):
         download(self.src_url, self.archive_name)

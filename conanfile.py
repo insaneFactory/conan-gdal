@@ -5,7 +5,8 @@ from conans.tools import download, unzip
 
 class GdalConan(ConanFile):
     name = "Gdal"
-    version = "2.1.1"
+    version = "2.1.3"
+    description = "GDAL is an open source X/MIT licensed translator library for raster and vector geospatial data formats."
     settings = "os", "compiler", "build_type", "arch"
     folder = "gdal-%s" % version
     url = "http://www.gdal.org/"
@@ -22,7 +23,6 @@ class GdalConan(ConanFile):
             self.run("chmod +x ./%s/configure" % self.folder)
 
     def build(self):
-        #os.makedirs('build')
         env = ConfigureEnvironment(self.deps_cpp_info, self.settings)
         self.run("cd %s && %s ../%s/configure --disable-static --enable-shared --with-geos=yes"
                  % (self.folder, env.command_line, self.folder))
@@ -32,7 +32,9 @@ class GdalConan(ConanFile):
         """ Define your conan structure: headers, libs and data. After building your
             project, this method is called to create a defined structure:
         """
-        self.copy(pattern="*.h", dst="include", src="%s/include" % self.folder, keep_path=True)
+        self.copy(pattern="*.h", dst="include", src="%s/gcore" % self.folder, keep_path=True)
+        self.copy(pattern="*.h", dst="include", src="%s/port" % self.folder, keep_path=True)
+        self.copy(pattern="*.h", dst="include", src="%s/ogr" % self.folder, keep_path=True)
         self.copy("*.lib", dst="lib", keep_path=False)
         # UNIX
         self.copy(pattern="*.a", dst="lib", keep_path=False)

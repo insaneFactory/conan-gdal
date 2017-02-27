@@ -23,25 +23,15 @@ class GdalConan(ConanFile):
 
     def build(self):
         env = ConfigureEnvironment(self.deps_cpp_info, self.settings)
-        self.run("cd %s && %s ../%s/configure --disable-static --enable-shared --with-geos=yes"
-                 % (self.folder, env.command_line, self.folder))
+        config_args = ["--disable-static", "--enable-shared",
+                       "--with-geos=yes", "--prefix %s" % self.package_folder]
+        self.run("cd %s && %s ../%s/configure %s"
+                 % (self.folder, env.command_line, self.folder, " ".join(config_args)))
         self.run("cd %s && %s make" % (self.folder, env.command_line))
-
-    def package(self):
-        """ Define your conan structure: headers, libs and data. After building your
-            project, this method is called to create a defined structure:
-        """
-        self.copy(pattern="*.h", dst="include", src="%s/gcore" % self.folder, keep_path=True)
-        self.copy(pattern="*.h", dst="include", src="%s/port" % self.folder, keep_path=True)
-        self.copy(pattern="*.h", dst="include", src="%s/ogr" % self.folder, keep_path=True)
-        self.copy(pattern="*", dst="data", src="%s/data" % self.folder, keep_path=True)
-        self.copy("*.lib", dst="lib", keep_path=False)
-        # UNIX
-        self.copy(pattern="*.a", dst="lib", keep_path=False)
-        self.copy(pattern="*.so*", dst="lib", keep_path=False)
-        self.copy(pattern="*.dylib*", dst="lib", keep_path=False)
+        self.run("cd %s && %s make install" % (self.folder, env.command_line))
 
     def package_info(self):
+        self.cpp_info.includedirs = ["include"]
         if self.settings.build_type == "Debug":
             libname = "gdal"    # ?
         else:

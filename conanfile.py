@@ -34,6 +34,7 @@ class GdalConan(ConanFile):
         self.copy(pattern="*.h", dst="include", src="%s/gcore" % self.folder, keep_path=True)
         self.copy(pattern="*.h", dst="include", src="%s/port" % self.folder, keep_path=True)
         self.copy(pattern="*.h", dst="include", src="%s/ogr" % self.folder, keep_path=True)
+        self.copy(pattern="*", dst="data", src="%s/data" % self.folder, keep_path=True)
         self.copy("*.lib", dst="lib", keep_path=False)
         # UNIX
         self.copy(pattern="*.a", dst="lib", keep_path=False)

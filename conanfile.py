@@ -11,6 +11,7 @@ class GdalConan(ConanFile):
     folder = "gdal-%s" % version
     url = "http://www.gdal.org/"
     license = "LGPL"
+    exports = ["FindGDAL.cmake"]
     archive_name = "gdal-%s.tar.gz" % version
     src_url = "http://download.osgeo.org/gdal/%s/%s" % (version, archive_name)
 
@@ -29,6 +30,9 @@ class GdalConan(ConanFile):
                  % (self.folder, env.command_line, self.folder, " ".join(config_args)))
         self.run("cd %s && %s make" % (self.folder, env.command_line))
         self.run("cd %s && %s make install" % (self.folder, env.command_line))
+
+    def package(self):
+        self.copy("FindGDAL.cmake", ".", ".")
 
     def package_info(self):
         self.cpp_info.includedirs = ["include"]

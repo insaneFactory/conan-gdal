@@ -8,7 +8,7 @@ env:
     - CONAN_UPLOAD: 1
     - CONAN_REFERENCE: "Gdal/2.1.3"
     - CONAN_USERNAME: "osechet"
-    - CONAN_CHANNEL: "stable"
+    - CONAN_CHANNEL: "testing"
     - CONAN_TOTAL_PAGES: 2
   matrix:
     - CONAN_GCC_VERSIONS=4.8 CONAN_CURRENT_PAGE=1 CONAN_USE_DOCKER=1

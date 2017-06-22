@@ -1,12 +1,14 @@
 
 import os
-from conans import ConanFile, ConfigureEnvironment
+from conans import ConanFile, AutoToolsBuildEnvironment, tools
 from conans.tools import download, unzip
 
 class GdalConan(ConanFile):
+    """ Conan package for GDAL """
+
     name = "Gdal"
     version = "2.1.3"
-    description = "GDAL is an open source X/MIT licensed translator library for raster and vector geospatial data formats."
+    description = "Conan package for GDAL"
     settings = "os", "compiler", "build_type", "arch"
     folder = "gdal-%s" % version
     url = "http://www.gdal.org/"
@@ -23,13 +25,14 @@ class GdalConan(ConanFile):
             self.run("chmod +x ./%s/configure" % self.folder)
 
     def build(self):
-        env = ConfigureEnvironment(self.deps_cpp_info, self.settings)
-        config_args = ["--disable-static", "--enable-shared",
-                       "--with-geos=yes", "--prefix %s" % self.package_folder]
-        self.run("cd %s && %s ../%s/configure %s"
-                 % (self.folder, env.command_line, self.folder, " ".join(config_args)))
-        self.run("cd %s && %s make" % (self.folder, env.command_line))
-        self.run("cd %s && %s make install" % (self.folder, env.command_line))
+        env_build = AutoToolsBuildEnvironment(self)
+        with tools.environment_append(env_build.vars):
+            config_args = ["--disable-static", "--enable-shared",
+                           "--with-geos=yes", "--prefix %s" % self.package_folder]
+            self.run("cd %s && ./configure %s"
+                     % (self.folder, " ".join(config_args)))
+            self.run("cd %s && make" % (self.folder))
+            self.run("cd %s && make install" % (self.folder))
 
     def package(self):
         self.copy("FindGDAL.cmake", ".", ".")

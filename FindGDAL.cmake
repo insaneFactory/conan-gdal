@@ -130,6 +130,10 @@ if(GDAL_FOUND)
         message(FATAL_ERROR "GDAL_SHARE_DIR not found.")
     endif()
 
+    include(CMakeFindDependencyMacro)
+    find_dependency(ZLIB)
+    find_dependency(Threads)
+
     if(NOT TARGET GDAL::GDAL)
         add_library(GDAL::GDAL UNKNOWN IMPORTED)
         if(GDAL_INCLUDE_DIRS)
@@ -141,6 +145,14 @@ if(GDAL_FOUND)
                 IMPORTED_LINK_INTERFACE_LANGUAGES "CXX"
                 IMPORTED_LOCATION "${GDAL_LIBRARY}")
         endif()
+
+        list(APPEND _deps
+            "${ZLIB_LIBRARIES}"
+            "Threads::Threads"
+            "${CMAKE_DL_LIBS}"
+        )
+        set_target_properties(GDAL::GDAL PROPERTIES
+                              INTERFACE_LINK_LIBRARIES "${_deps}")
     endif()
 endif()
 

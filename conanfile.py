@@ -9,11 +9,14 @@ class GdalConan(ConanFile):
     name = "Gdal"
     version = "2.1.3"
     description = "Conan package for GDAL"
-    settings = "os", "compiler", "build_type", "arch"
-    folder = "gdal-%s" % version
     url = "http://www.gdal.org/"
     license = "LGPL"
+    settings = "os", "compiler", "build_type", "arch"
+    options = {"shared": [True, False]}
+    default_options = "shared=True"
+    requires = "zlib/1.2.11@conan/stable"
     exports = ["FindGDAL.cmake"]
+    folder = "gdal-%s" % version
     archive_name = "gdal-%s.tar.gz" % version
     src_url = "http://download.osgeo.org/gdal/%s/%s" % (version, archive_name)
 
@@ -27,8 +30,12 @@ class GdalConan(ConanFile):
     def build(self):
         env_build = AutoToolsBuildEnvironment(self)
         with tools.environment_append(env_build.vars):
-            config_args = ["--disable-static", "--enable-shared",
-                           "--with-geos=yes", "--prefix %s" % self.package_folder]
+            config_args = ["--with-geos=yes", "--prefix %s" % self.package_folder]
+            if self.options.shared:
+                config_args += ["--disable-static", "--enable-shared"]
+            else:
+                config_args += ["--without-ld-shared", "--disable-shared", "--enable-static"]
+
             self.run("cd %s && ./configure %s"
                      % (self.folder, " ".join(config_args)))
             self.run("cd %s && make" % (self.folder))

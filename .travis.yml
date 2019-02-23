@@ -1,12 +1,14 @@
 env:
    global:
-     - CONAN_REFERENCE: "Gdal/2.1.3"
+     - CONAN_REFERENCE: "GDAL/2.1.3"
      - CONAN_USERNAME: "osechet"
+     - CONAN_LOGIN_USERNAME: "osechet"
      - CONAN_CHANNEL: "testing"
-     - CONAN_TOTAL_PAGES: 2
+     - CONAN_UPLOAD: "https://api.bintray.com/conan/osechet/public-conan"
 
 linux: &linux
    os: linux
+   dist: xenial
    sudo: required
    language: python
    python: "3.6"
@@ -19,52 +21,19 @@ matrix:
    include:
 
       - <<: *linux
-        env: CONAN_GCC_VERSIONS=4.8 CONAN_DOCKER_IMAGE=lasote/conangcc48 CONAN_CURRENT_PAGE=1
+        env: CONAN_GCC_VERSIONS=4.9 CONAN_DOCKER_IMAGE=conanio/gcc49
 
       - <<: *linux
-        env: CONAN_GCC_VERSIONS=4.8 CONAN_DOCKER_IMAGE=lasote/conangcc48 CONAN_CURRENT_PAGE=2
+        env: CONAN_GCC_VERSIONS=5 CONAN_DOCKER_IMAGE=conanio/gcc5
 
       - <<: *linux
-        env: CONAN_GCC_VERSIONS=4.9 CONAN_DOCKER_IMAGE=lasote/conangcc49 CONAN_CURRENT_PAGE=1
+        env: CONAN_GCC_VERSIONS=6 CONAN_DOCKER_IMAGE=conanio/gcc6
 
       - <<: *linux
-        env: CONAN_GCC_VERSIONS=4.9 CONAN_DOCKER_IMAGE=lasote/conangcc49 CONAN_CURRENT_PAGE=2
+        env: CONAN_GCC_VERSIONS=7 CONAN_DOCKER_IMAGE=conanio/gcc7
 
       - <<: *linux
-        env: CONAN_GCC_VERSIONS=5.4 CONAN_DOCKER_IMAGE=lasote/conangcc54 CONAN_CURRENT_PAGE=1
-
-      - <<: *linux
-        env: CONAN_GCC_VERSIONS=5.4 CONAN_DOCKER_IMAGE=lasote/conangcc54 CONAN_CURRENT_PAGE=2
-
-      - <<: *linux
-        env: CONAN_GCC_VERSIONS=6.2 CONAN_DOCKER_IMAGE=lasote/conangcc62 CONAN_CURRENT_PAGE=1
-
-      - <<: *linux
-        env: CONAN_GCC_VERSIONS=6.2 CONAN_DOCKER_IMAGE=lasote/conangcc62 CONAN_CURRENT_PAGE=2
-
-      - <<: *osx
-        osx_image: xcode7.3
-        env: CONAN_APPLE_CLANG_VERSIONS=7.3 CONAN_CURRENT_PAGE=1
-
-      - <<: *osx
-        osx_image: xcode7.3
-        env: CONAN_APPLE_CLANG_VERSIONS=7.3 CONAN_CURRENT_PAGE=2
-
-      - <<: *osx
-        osx_image: xcode8.2
-        env: CONAN_APPLE_CLANG_VERSIONS=8.0 CONAN_CURRENT_PAGE=1
-
-      - <<: *osx
-        osx_image: xcode8.2
-        env: CONAN_APPLE_CLANG_VERSIONS=8.0 CONAN_CURRENT_PAGE=2
-
-      - <<: *osx
-        osx_image: xcode8.3
-        env: CONAN_APPLE_CLANG_VERSIONS=8.1 CONAN_CURRENT_PAGE=1
-
-      - <<: *osx
-        osx_image: xcode8.3
-        env: CONAN_APPLE_CLANG_VERSIONS=8.1 CONAN_CURRENT_PAGE=2
+        env: CONAN_GCC_VERSIONS=8 CONAN_DOCKER_IMAGE=conanio/gcc8
 
 install:
   - chmod +x .travis/install.sh

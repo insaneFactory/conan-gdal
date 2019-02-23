@@ -4,7 +4,7 @@ from conan.packager import ConanMultiPackager
 def main():
     """ Main function """
 
-    builder = ConanMultiPackager(username="osechet", channel="testing")
+    builder = ConanMultiPackager()
     builder.add_common_builds()
     filtered_builds = []
     for settings, options, env_vars, build_requires in builder.builds:

@@ -45,6 +45,9 @@
 #   GDAL::GDAL        - Target for the whole GDAL library
 #
 
+# On OSX, we don't want frameworks libraries
+set(CMAKE_FIND_FRAMEWORK "NEVER")
+
 find_path(GDAL_INCLUDE_DIR gdal.h
   HINTS
     ENV GDAL_DIR
@@ -54,8 +57,8 @@ find_path(GDAL_INCLUDE_DIR gdal.h
      include/GDAL
      include
   PATHS
-      ~/Library/Frameworks/gdal.framework/Headers
-      /Library/Frameworks/gdal.framework/Headers
+    #   ~/Library/Frameworks/gdal.framework/Headers
+    #   /Library/Frameworks/gdal.framework/Headers
       /sw # Fink
       /opt/local # DarwinPorts
       /opt/csw # Blastwave

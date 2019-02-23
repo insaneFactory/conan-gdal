@@ -1,46 +1,30 @@
-Conan package for Gdal
---------------------------------------------
+This repository holds a conan recipe for Gdal.
+---
 
-[![Build Status](https://travis-ci.org/osechet/conan-gdal.svg?branch=master)](https://travis-ci.org/osechet/conan-gdal)
+## Package Status
 
-[![badge](https://img.shields.io/badge/conan.io-Gdal%2F2.1.3-green.svg?logo=data:image/png;base64%2CiVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAMAAAAolt3jAAAA1VBMVEUAAABhlctjlstkl8tlmMtlmMxlmcxmmcxnmsxpnMxpnM1qnc1sn85voM91oM11oc1xotB2oc56pNF6pNJ2ptJ8ptJ8ptN9ptN8p9N5qNJ9p9N9p9R8qtOBqdSAqtOAqtR%2BrNSCrNJ/rdWDrNWCsNWCsNaJs9eLs9iRvNuVvdyVv9yXwd2Zwt6axN6dxt%2Bfx%2BChyeGiyuGjyuCjyuGly%2BGlzOKmzOGozuKoz%2BKqz%2BOq0OOv1OWw1OWw1eWx1eWy1uay1%2Baz1%2Baz1%2Bez2Oe02Oe12ee22ujUGwH3AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfgBQkREyOxFIh/AAAAiklEQVQI12NgAAMbOwY4sLZ2NtQ1coVKWNvoc/Eq8XDr2wB5Ig62ekza9vaOqpK2TpoMzOxaFtwqZua2Bm4makIM7OzMAjoaCqYuxooSUqJALjs7o4yVpbowvzSUy87KqSwmxQfnsrPISyFzWeWAXCkpMaBVIC4bmCsOdgiUKwh3JojLgAQ4ZCE0AMm2D29tZwe6AAAAAElFTkSuQmCC)](http://www.conan.io/source/Gdal/2.1.3/osechet/testing)
+| Bintray | Appveyor | Travis |
+|---------|-----------|--------|
+|[![Download](https://api.bintray.com/packages/osechet/public-conan/gdal%3Aosechet/images/download.svg) ](https://bintray.com/osechet/public-conan/gdal%3Aosechet/_latestVersion)|[![Build status](https://ci.appveyor.com/api/projects/status/github/osechet/conan-gdal?svg=true)](https://ci.appveyor.com/project/osechet/conan-gdal)|[![Build Status](https://travis-ci.org/osechet/conan-gdal.svg?branch=testing/2.1.3)](https://travis-ci.org/osechet/conan-gdal)|
 
-[Conan.io](https://conan.io) package for Gdal library.
+## Conan.io Information
 
-The packages generated with this **conanfile** can be found in [conan.io](http://www.conan.io/source/Gdal/2.1.3/osechet/testing).
+My packages can be found in the following public Conan repository:
 
-## Reuse the package
+[osechet Public Conan Repository on Bintray](https://bintray.com/osechet/public-conan)
 
-### Basic setup
+*Note: You can click the "Set Me Up" button on the Bintray page above for instructions on using packages from this repository.*
 
-```
-$ conan install Gdal/2.1.3@osechet/testing
-```
+## License Information
 
-### Project setup
+The contents of this GIT repository are completely separate from the software being packaged and therefor licensed separately.  The license for all files contained in this GIT repository are defined in the [LICENSE.md](LICENSE.md) file in this repository.  The licenses included with the GDAL package published by this recipe can be found in the Conan package directories in the following location, relative to the Conan Cache root (`~/.conan` by default):
 
-If you handle multiple dependencies in your project is better to add a *conanfile.txt*
-```
-    [requires]
-    Gdal/2.1.3@osechet/testing
+### License(s) for packaged software:
 
-    [generators]
-    txt
-    cmake
-```
-Complete the installation of requirements for your project running:
-```
-    conan install .
-```
-Project setup installs the library (and all his dependencies) and generates the files *conanbuildinfo.txt* and *conanbuildinfo.cmake* with all the paths and variables that you need to link with your dependencies.
+    ~/.conan/data/<pkg_name>/<pkg_version>/osechet/gdal/<random_package_id>/<LICENSE_FILES_HERE>
 
-## Develop the package
+*Note :   The most common filenames for OSS licenses are `LICENSE` AND `COPYING` without file extensions.*
 
-### Build packages
+### License for this recipe:
 
-    $ pip install conan_package_tools
-    $ python build.py
-
-### Upload packages to server
-
-    $ conan upload Gdal/2.1.3@osechet/testing --all
+    ~/.conan/data/<pkg_name>/<pkg_version>/osechet/export/LICENSE.md

@@ -6,43 +6,47 @@ from conans.tools import download, unzip
 class GdalConan(ConanFile):
     """ Conan package for GDAL """
 
-    name = "Gdal"
+    name = "GDAL"
     version = "2.1.3"
-    description = "Conan package for GDAL"
+    description = "GDAL - Geospatial Data Abstraction Library"
     url = "http://www.gdal.org/"
     license = "LGPL"
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
-    default_options = "shared=True"
+    default_options = {"shared": True}
     requires = "zlib/1.2.11@conan/stable"
-    exports = ["FindGDAL.cmake"]
-    folder = "gdal-%s" % version
-    archive_name = "gdal-%s.tar.gz" % version
-    src_url = "http://download.osgeo.org/gdal/%s/%s" % (version, archive_name)
+    exports = ["LICENSE.md", "FindGDAL.cmake"]
+
+    _folder = "gdal-%s" % version
 
     def source(self):
-        download(self.src_url, self.archive_name)
-        unzip(self.archive_name)
-        os.unlink(self.archive_name)
+        archive_name = "gdal-%s.tar.gz" % self.version
+        src_url = "http://download.osgeo.org/gdal/%s/%s" % (self.version, archive_name)
+
+        download(src_url, archive_name)
+        unzip(archive_name)
+        os.unlink(archive_name)
         if self.settings.os != "Windows":
-            self.run("chmod +x ./%s/configure" % self.folder)
+            self.run("chmod +x ./%s/configure" % self._folder)
+
 
     def build(self):
-        env_build = AutoToolsBuildEnvironment(self)
-        with tools.environment_append(env_build.vars):
-            config_args = ["--with-geos=yes", "--prefix %s" % self.package_folder]
-            if self.options.shared:
-                config_args += ["--disable-static", "--enable-shared"]
-            else:
-                config_args += ["--without-ld-shared", "--disable-shared", "--enable-static"]
+        self.run("mkdir %s" % self.package_folder)
+        self.run("cp %s/FindGDAL.cmake %s/" % (self.source_folder, self.package_folder))
 
-            self.run("cd %s && ./configure %s"
-                     % (self.folder, " ".join(config_args)))
-            self.run("cd %s && make" % (self.folder))
-            self.run("cd %s && make install" % (self.folder))
+        config_args = ["--with-geos=yes"]
+        if self.options.shared:
+            config_args += ["--disable-static", "--enable-shared"]
+        else:
+            config_args += ["--without-ld-shared", "--disable-shared", "--enable-static"]
 
-    def package(self):
-        self.copy("FindGDAL.cmake", ".", ".")
+        # GDAL cannot be build in a separate build directory
+        autotools = AutoToolsBuildEnvironment(self)
+        with tools.environment_append(autotools.vars):
+            self.run("cd %s && ./configure --prefix %s %s" % (os.path.join(self.source_folder, self._folder), self.package_folder, " ".join(config_args)))
+            self.run("cd %s && make" % os.path.join(self.source_folder, self._folder))
+            self.run("cd %s && make install" % os.path.join(self.source_folder, self._folder))
+
 
     def package_info(self):
         self.cpp_info.includedirs = ["include"]

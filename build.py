@@ -6,12 +6,7 @@ def main():
 
     builder = ConanMultiPackager()
     builder.add_common_builds()
-    filtered_builds = []
-    for settings, options, env_vars, build_requires in builder.builds:
-        if settings["arch"] == "x86_64":
-            filtered_builds.append([settings, options, env_vars, build_requires])
-
-    builder.builds = filtered_builds
+    builder.remove_build_if(lambda build: build.settings["arch"] != "x86_64")
     builder.run()
 
 if __name__ == "__main__":

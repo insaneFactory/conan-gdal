@@ -7,7 +7,12 @@ conan_basic_setup()
 find_package(GDAL REQUIRED)
 
 add_executable(helloworld main.cpp)
+
+if(NOT BUILD_SHARED_LIBS)
+    list(APPEND additional_libs sqlite3)
+endif()
 target_link_libraries(helloworld
     PUBLIC
     GDAL::GDAL
+    sqlite3
 )

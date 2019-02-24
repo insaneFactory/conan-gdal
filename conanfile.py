@@ -31,14 +31,18 @@ class GdalConan(ConanFile):
 
 
     def build(self):
-        self.run("mkdir %s" % self.package_folder)
+        self.run("mkdir -p %s" % self.package_folder)
         self.run("cp %s/FindGDAL.cmake %s/" % (self.source_folder, self.package_folder))
 
         config_args = ["--with-geos=yes"]
         if self.options.shared:
             config_args += ["--disable-static", "--enable-shared"]
         else:
-            config_args += ["--without-ld-shared", "--disable-shared", "--enable-static"]
+            config_args += [
+                "--without-ld-shared", "--disable-shared", "--enable-static",
+                "--with-gif=internal", "--with-libz=internal", "--with-png=internal",
+                "--with-libtiff=internal", "--with-geotiff=internal", "--with-jpeg=internal",
+            ]
 
         # GDAL cannot be build in a separate build directory
         autotools = AutoToolsBuildEnvironment(self)

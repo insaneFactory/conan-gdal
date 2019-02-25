@@ -7,7 +7,7 @@ class GdalConan(ConanFile):
     """ Conan package for GDAL """
 
     name = "GDAL"
-    version = "2.1.3"
+    version = "1.11.1"
     description = "GDAL - Geospatial Data Abstraction Library"
     url = "http://www.gdal.org/"
     license = "LGPL"
@@ -40,8 +40,6 @@ class GdalConan(ConanFile):
         else:
             config_args += [
                 "--without-ld-shared", "--disable-shared", "--enable-static",
-                "--with-gif=internal", "--with-libz=internal", "--with-png=internal",
-                "--with-libtiff=internal", "--with-geotiff=internal", "--with-jpeg=internal",
             ]
 
         # GDAL cannot be build in a separate build directory

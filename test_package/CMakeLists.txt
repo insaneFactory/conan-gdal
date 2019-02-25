@@ -8,11 +8,13 @@ find_package(GDAL REQUIRED)
 
 add_executable(helloworld main.cpp)
 
-if(NOT BUILD_SHARED_LIBS)
-    list(APPEND additional_libs sqlite3)
-endif()
+set(additional_libs)
+# if(NOT BUILD_SHARED_LIBS)
+#     find_package(Sqlite3 REQUIRED)
+#     list(APPEND additional_libs sqlite3::sqlite3)
+# endif()
 target_link_libraries(helloworld
     PUBLIC
     GDAL::GDAL
-    sqlite3
+    ${additional_libs}
 )

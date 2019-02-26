@@ -14,10 +14,15 @@ class GdalConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
     default_options = {"shared": True}
-    requires = ("zlib/1.2.11@conan/stable", "sqlite3/3.27.1@bincrafters/stable")
+    requires = "zlib/1.2.11@conan/stable"
     exports = ["LICENSE.md", "FindGDAL.cmake"]
 
     _folder = "gdal-%s" % version
+
+
+    def requirements(self):
+        if not self.options.shared:
+            self.requires("sqlite3/3.27.1@bincrafters/stable", private=False, override=False)
 
 
     def source(self):
@@ -45,11 +50,10 @@ class GdalConan(ConanFile):
 
         # GDAL cannot be build in a separate build directory
         autotools = AutoToolsBuildEnvironment(self)
-        with tools.environment_append(autotools.vars):
-            with tools.chdir(os.path.join(self.source_folder, self._folder)):
-                self.run("./configure --prefix %s %s" % (self.package_folder, " ".join(config_args)))
-                self.run("make")
-                self.run("make install")
+        with tools.chdir(self._folder):
+            autotools.configure(args=config_args)
+            autotools.make()
+            autotools.install()
 
 
     def package_info(self):

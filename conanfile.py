@@ -46,9 +46,10 @@ class GdalConan(ConanFile):
         # GDAL cannot be build in a separate build directory
         autotools = AutoToolsBuildEnvironment(self)
         with tools.environment_append(autotools.vars):
-            self.run("cd %s && ./configure --prefix %s %s" % (os.path.join(self.source_folder, self._folder), self.package_folder, " ".join(config_args)))
-            self.run("cd %s && make" % os.path.join(self.source_folder, self._folder))
-            self.run("cd %s && make install" % os.path.join(self.source_folder, self._folder))
+            with tools.chdir(os.path.join(self.source_folder, self._folder)):
+                self.run("./configure --prefix %s %s" % (self.package_folder, " ".join(config_args)))
+                self.run("make")
+                self.run("make install")
 
 
     def package_info(self):

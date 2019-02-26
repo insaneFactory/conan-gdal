@@ -14,10 +14,11 @@ class GdalConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
     default_options = {"shared": True}
-    requires = "zlib/1.2.11@conan/stable"
+    requires = ("zlib/1.2.11@conan/stable", "sqlite3/3.27.1@bincrafters/stable")
     exports = ["LICENSE.md", "FindGDAL.cmake"]
 
     _folder = "gdal-%s" % version
+
 
     def source(self):
         archive_name = "gdal-%s.tar.gz" % self.version

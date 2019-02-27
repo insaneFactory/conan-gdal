@@ -37,7 +37,7 @@ class GdalConan(ConanFile):
 
 
     def build(self):
-        config_args = ["--with-geos=yes"]
+        config_args = ["--with-geos=yes", "--with-sqlite3=no"]
         if self.options.shared:
             config_args += ["--disable-static", "--enable-shared"]
         else:
@@ -47,9 +47,11 @@ class GdalConan(ConanFile):
 
         autotools = AutoToolsBuildEnvironment(self)
         with tools.chdir(self._folder):
-            autotools.configure(args=config_args)
-            autotools.make()
-            autotools.install()
+            env_build_vars = autotools.vars
+            env_build_vars['CFLAGS'] = '-D_GNU_SOURCE'
+            autotools.configure(args=config_args, vars=env_build_vars)
+            autotools.make(vars=env_build_vars)
+            autotools.install(vars=env_build_vars)
 
         self.run("cp %s/FindGDAL.cmake %s/" % (self.source_folder, self.package_folder))
 

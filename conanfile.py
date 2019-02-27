@@ -20,11 +20,6 @@ class GdalConan(ConanFile):
     _folder = "gdal-%s" % version
 
 
-    def requirements(self):
-        if not self.options.shared:
-            self.requires("sqlite3/3.27.1@bincrafters/stable", private=False, override=False)
-
-
     def source(self):
         archive_name = "gdal-%s.tar.gz" % self.version
         src_url = "http://download.osgeo.org/gdal/%s/%s" % (self.version, archive_name)

@@ -37,9 +37,6 @@ class GdalConan(ConanFile):
 
 
     def build(self):
-        self.run("mkdir -p %s" % self.package_folder)
-        self.run("cp %s/FindGDAL.cmake %s/" % (self.source_folder, self.package_folder))
-
         config_args = ["--with-geos=yes"]
         if self.options.shared:
             config_args += ["--disable-static", "--enable-shared"]
@@ -48,18 +45,15 @@ class GdalConan(ConanFile):
                 "--without-ld-shared", "--disable-shared", "--enable-static",
             ]
 
-        # GDAL cannot be build in a separate build directory
         autotools = AutoToolsBuildEnvironment(self)
         with tools.chdir(self._folder):
             autotools.configure(args=config_args)
             autotools.make()
             autotools.install()
 
+        self.run("cp %s/FindGDAL.cmake %s/" % (self.source_folder, self.package_folder))
+
 
     def package_info(self):
         self.cpp_info.includedirs = ["include"]
-        if self.settings.build_type == "Debug":
-            libname = "gdal"    # ?
-        else:
-            libname = "gdal"
-        self.cpp_info.libs = [libname]
+        self.cpp_info.libs = ["gdal"]

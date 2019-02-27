@@ -5,7 +5,7 @@ This repository holds a conan recipe for Gdal.
 
 | Bintray | Appveyor | Travis |
 |---------|-----------|--------|
-|[![Download](https://api.bintray.com/packages/osechet/public-conan/gdal%3Aosechet/images/download.svg) ](https://bintray.com/osechet/public-conan/gdal%3Aosechet/_latestVersion)|[![Build status](https://ci.appveyor.com/api/projects/status/github/osechet/conan-gdal?svg=true)](https://ci.appveyor.com/project/osechet/conan-gdal)|[![Build Status](https://travis-ci.org/osechet/conan-gdal.svg?branch=testing/1.11.1)](https://travis-ci.org/osechet/conan-gdal)|
+|[ ![Download](https://api.bintray.com/packages/osechet/public-conan/GDAL:osechet/images/download.svg?version=1.11.1:testing) ](https://bintray.com/osechet/public-conan/GDAL:osechet/1.11.1:testing/link)|[![Build status](https://ci.appveyor.com/api/projects/status/github/osechet/conan-gdal?svg=true)](https://ci.appveyor.com/project/osechet/conan-gdal)|[![Build Status](https://travis-ci.org/osechet/conan-gdal.svg?branch=testing/1.11.1)](https://travis-ci.org/osechet/conan-gdal)|
 
 ## Conan.io Information
 

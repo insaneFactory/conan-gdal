@@ -6,6 +6,7 @@ env:
     - CONAN_CHANNEL: "testing"
     - CONAN_TOTAL_PAGES: 4
     - CONAN_UPLOAD: "https://api.bintray.com/conan/osechet/public-conan"
+    - CONAN_STABLE_BRANCH_PATTERN: "stable/*"
 
 linux: &linux
   os: linux
@@ -68,7 +69,16 @@ matrix:
 
     - <<: *osx
       osx_image: xcode7.3
-      env: CONAN_APPLE_CLANG_VERSIONS=7.3
+      env: CONAN_APPLE_CLANG_VERSIONS=7.3 CONAN_CURRENT_PAGE=1
+    - <<: *osx
+      osx_image: xcode7.3
+      env: CONAN_APPLE_CLANG_VERSIONS=7.3 CONAN_CURRENT_PAGE=2
+    - <<: *osx
+      osx_image: xcode7.3
+      env: CONAN_APPLE_CLANG_VERSIONS=7.3 CONAN_CURRENT_PAGE=3
+    - <<: *osx
+      osx_image: xcode7.3
+      env: CONAN_APPLE_CLANG_VERSIONS=7.3 CONAN_CURRENT_PAGE=4
 
 install:
   - chmod +x .travis/install.sh

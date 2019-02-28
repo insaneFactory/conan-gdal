@@ -39,6 +39,13 @@ class GdalConan(ConanFile):
             config_args += [
                 "--without-ld-shared", "--disable-shared", "--enable-static",
             ]
+            if self.settings.os == "Macos":
+                config_args += [
+                    "--with-png=internal", "--with-libtiff=internal", "--with-geotiff=internal",
+                    "--with-jpeg=internal", "--with-gif=internal", "--with-curl=no",
+                    "--with-pg=no", "--with-expat=no", "--with-xml2=no",
+                    "--with-pcre=no", "--with-freexl=no",
+                ]
 
         autotools = AutoToolsBuildEnvironment(self)
         with tools.chdir(self._folder):

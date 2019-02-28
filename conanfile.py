@@ -32,7 +32,7 @@ class GdalConan(ConanFile):
 
 
     def build(self):
-        config_args = ["--with-geos=yes", "--with-sqlite3=no"]
+        config_args = ["--with-sqlite3=no"]
         if self.options.shared:
             config_args += ["--disable-static", "--enable-shared"]
         else:
@@ -44,7 +44,7 @@ class GdalConan(ConanFile):
                     "--with-png=internal", "--with-libtiff=internal", "--with-geotiff=internal",
                     "--with-jpeg=internal", "--with-gif=internal", "--with-curl=no",
                     "--with-pg=no", "--with-expat=no", "--with-xml2=no",
-                    "--with-pcre=no", "--with-freexl=no",
+                    "--with-pcre=no", "--with-freexl=no", "--with-geos=no",
                 ]
 
         autotools = AutoToolsBuildEnvironment(self)

@@ -94,30 +94,30 @@ matrix:
       env: CONAN_APPLE_CLANG_VERSIONS=8.1 CONAN_CURRENT_PAGE=4
 
     - <<: *osx
-      osx_image: xcode9.4
-      env: CONAN_APPLE_CLANG_VERSIONS=9.4 CONAN_CURRENT_PAGE=1
+      osx_image: xcode9.1
+      env: CONAN_APPLE_CLANG_VERSIONS=9.1 CONAN_CURRENT_PAGE=1
     - <<: *osx
-      osx_image: xcode9.4
-      env: CONAN_APPLE_CLANG_VERSIONS=9.4 CONAN_CURRENT_PAGE=2
+      osx_image: xcode9.1
+      env: CONAN_APPLE_CLANG_VERSIONS=9.1 CONAN_CURRENT_PAGE=2
     - <<: *osx
-      osx_image: xcode9.4
-      env: CONAN_APPLE_CLANG_VERSIONS=9.4 CONAN_CURRENT_PAGE=3
+      osx_image: xcode9.1
+      env: CONAN_APPLE_CLANG_VERSIONS=9.1 CONAN_CURRENT_PAGE=3
     - <<: *osx
-      osx_image: xcode9.4
-      env: CONAN_APPLE_CLANG_VERSIONS=9.4 CONAN_CURRENT_PAGE=4
+      osx_image: xcode9.1
+      env: CONAN_APPLE_CLANG_VERSIONS=9.1 CONAN_CURRENT_PAGE=4
 
     - <<: *osx
-      osx_image: xcode10.1
-      env: CONAN_APPLE_CLANG_VERSIONS=10.1 CONAN_CURRENT_PAGE=1
+      osx_image: xcode10
+      env: CONAN_APPLE_CLANG_VERSIONS=10 CONAN_CURRENT_PAGE=1
     - <<: *osx
-      osx_image: xcode10.1
-      env: CONAN_APPLE_CLANG_VERSIONS=10.1 CONAN_CURRENT_PAGE=2
+      osx_image: xcode10
+      env: CONAN_APPLE_CLANG_VERSIONS=10 CONAN_CURRENT_PAGE=2
     - <<: *osx
-      osx_image: xcode10.1
-      env: CONAN_APPLE_CLANG_VERSIONS=10.1 CONAN_CURRENT_PAGE=3
+      osx_image: xcode10
+      env: CONAN_APPLE_CLANG_VERSIONS=10 CONAN_CURRENT_PAGE=3
     - <<: *osx
-      osx_image: xcode10.1
-      env: CONAN_APPLE_CLANG_VERSIONS=10.1 CONAN_CURRENT_PAGE=4
+      osx_image: xcode10
+      env: CONAN_APPLE_CLANG_VERSIONS=10 CONAN_CURRENT_PAGE=4
 
 install:
   - chmod +x .travis/install.sh

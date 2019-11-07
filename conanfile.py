@@ -17,16 +17,16 @@ class GdalConan(ConanFile):
         "fPIC": True
     }
     requires = (
-        "zlib/1.2.11@conan/stable",
-        "sqlite3/3.29.0@bincrafters/stable",
-		"libjpeg/9c@bincrafters/stable",
+        "zlib/1.2.11",
+        "sqlite3/3.29.0",
+		"libjpeg/9c",
         "openjpeg/2.3.1@bincrafters/stable",
-		"libpng/1.6.37@bincrafters/stable",
-		"libxml2/2.9.8@bincrafters/stable",
-		"libtiff/4.0.9@bincrafters/stable",
-		"libgeotiff/1.4.2@insanefactory/stable",
-        "giflib/5.1.4@bincrafters/stable",
-		"proj4/5.2.0@insanefactory/stable",
+		"libpng/1.6.37",
+		"libxml2/2.9.9",
+		"libtiff/4.0.9",
+		"libgeotiff/1.5.1@insanefactory/stable",
+        "giflib/5.1.4",
+		"proj/6.2.1@insanefactory/stable",
         "geos/3.8.0@insanefactory/stable"
     )
     exports = ["LICENSE.md", "FindGDAL.cmake"]

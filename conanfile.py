@@ -4,6 +4,7 @@ from conans import ConanFile, AutoToolsBuildEnvironment, tools, VisualStudioBuil
 class GdalConan(ConanFile):
     name = "gdal"
     version = "2.4.2"
+    _version_suffix = "204"
     description = "GDAL - Geospatial Data Abstraction Library"
     url = "http://www.gdal.org/"
     license = "LGPL"
@@ -27,7 +28,7 @@ class GdalConan(ConanFile):
 		"libgeotiff/1.5.1@insanefactory/stable",
         "giflib/5.1.4",
 		"proj/6.2.1@insanefactory/stable",
-        "geos/3.8.0@insanefactory/stable"
+        "geos/3.7.3@insanefactory/stable"
     )
     exports = ["LICENSE.md", "FindGDAL.cmake"]
     #generators = "pkg_config"
@@ -138,7 +139,7 @@ class GdalConan(ConanFile):
             "15": "1910",
             "16": "1920"
         }
-        vsver = versions.get(self.settings.compiler.version, None)
+        vsver = versions.get(str(self.settings.compiler.version), None)
 
         args = "GDAL_HOME=" + self.package_folder
         if vsver is not None:
@@ -151,7 +152,7 @@ class GdalConan(ConanFile):
             args += " DLLBUILD=0"
 
         env_build = VisualStudioBuildEnvironment(self)
-        with tools.environment_append(env_build.vars):
+        with tools.environment_append(env_build.vars) and tools.chdir(self._source_subfolder):
             vcvars = tools.vcvars_command(self.settings)
             self.run("%s && nmake -f makefile.vc %s" % (vcvars, args))
             self.run("%s && nmake -f makefile.vc %s install" % (vcvars, args))
@@ -162,5 +163,16 @@ class GdalConan(ConanFile):
         else:
             self._build_autotools()
 
+    def package(self):
+        if self.settings.compiler == "Visual Studio":
+            self.copy("*.h", dst="include", src=os.path.join(self._source_subfolder, "alg"), keep_path=False)
+            self.copy("*.h", dst="include", src=os.path.join(self._source_subfolder, "frmts"), keep_path=False)
+            self.copy("*.h", dst="include", src=os.path.join(self._source_subfolder, "gcore"), keep_path=False)
+            self.copy("*.h", dst="include", src=os.path.join(self._source_subfolder, "gnm"), keep_path=False)
+            self.copy("*.h", dst="include", src=os.path.join(self._source_subfolder, "ogr"), keep_path=False)
+            self.copy("*.h", dst="include", src=os.path.join(self._source_subfolder, "port"), keep_path=False)
+            self.copy("gdal_i.lib", dst="lib", src=self._source_subfolder)
+            self.copy("gdal%s.pdb" % self._version_suffix, dst="bin", src=self._source_subfolder)
+
     def package_info(self):
-        self.cpp_info.libs = ["gdal"]
+        self.cpp_info.libs = ["gdal_i"] if self.settings.compiler == "Visual Studio" else ["gdal"]

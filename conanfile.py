@@ -59,7 +59,7 @@ class GdalConan(ConanFile):
             "--with-geotiff",
             "--with-gif",
             "--with-proj",
-            "--with-proj5-api=no",
+            "--with-proj5-api=yes",
             "--with-geos",
             "--with-threads",
             "--without-bsb",
